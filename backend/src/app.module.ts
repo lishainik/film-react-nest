@@ -6,7 +6,6 @@ import * as path from 'node:path';
 import { configProvider } from './app.config.provider';
 import { FilmsModule } from './films/films.module';
 import { OrderModule } from './order/order.module';
-import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
@@ -16,8 +15,6 @@ import { MongooseModule } from '@nestjs/mongoose';
     }),
     FilmsModule,
     OrderModule,
-    MongooseModule.forRoot(
-      process.env.DATABASE_URL),
     ServeStaticModule.forRoot({
       rootPath: path.join(__dirname, '..', 'public'),
     }),

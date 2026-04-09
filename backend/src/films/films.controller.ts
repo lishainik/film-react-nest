@@ -13,7 +13,6 @@ export class FilmsController {
 
   @Get(':id/schedule')
   async getSchedule(@Param('id') id: string) {
-    const items = await this.filmService.findById(id);
-    return { total: items.length, items };
+    return this.filmService.findSchedule(id);
   }
 }

@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import { FilmsRepository } from '../repository/films,repository';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { FilmsRepository } from '../repository/films.repository';
 import { FilmDto } from './dto/films.dto';
 
 @Injectable()
@@ -10,8 +10,11 @@ export class FilmsService {
     return await this.filmsRepository.findAll();
   }
 
-  async findById(id: string) {
-    const film = await this.filmsRepository.findById(id);
-    return film?.schedule || [];
+  async findSchedule(id: string) {
+    const items = await this.filmsRepository.findSchedule(id);
+    if (!items) {
+      throw new NotFoundException(`Film with id ${id} not found`);
+    }
+    return { total: items.length, items };
   }
 }
