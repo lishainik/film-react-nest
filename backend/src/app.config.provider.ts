@@ -4,6 +4,7 @@ export const configProvider = {
   provide: 'CONFIG',
   useFactory: (configService: ConfigService): AppConfig => ({
     database: {
+      type: configService.get<string>('DATABASE_DRIVER') || 'postgres',
       driver: configService.get<string>('DATABASE_DRIVER', 'postgres'),
       url: configService.get<string>(
         'DATABASE_URL',
@@ -21,6 +22,7 @@ export interface AppConfig {
 }
 
 export interface AppConfigDatabase {
+  type: string;
   driver: string;
   url: string;
   username: string;

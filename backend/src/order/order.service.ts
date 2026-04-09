@@ -39,8 +39,8 @@ export class OrderService {
         seat: ticket.seat,
         price: ticket.price,
       });
-
-      return result;
     }
+
+    return result;
   }
 }

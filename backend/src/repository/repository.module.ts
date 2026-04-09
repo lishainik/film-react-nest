@@ -10,10 +10,15 @@ import { FilmsRepository } from './films.repository';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
+        type: configService.get<string>(
+          'DATABASE_DRIVER',
+          'postgres',
+        ) as 'postgres',
         url: configService.get<string>('DATABASE_URL'),
+        username: configService.get<string>('DATABASE_USERNAME'),
+        password: configService.get<string>('DATABASE_PASSWORD'),
         entities: [Film, Schedule],
-        synchronize: false,
+        synchronize: configService.get<string>('NODE_ENV') !== 'production',
       }),
       inject: [ConfigService],
     }),
