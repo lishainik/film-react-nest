@@ -1,7 +1,7 @@
 import { Entity, PrimaryColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { Film } from './film.entity';
 
-@Entity('schedules')
+@Entity('schedule')
 export class Schedule {
   @PrimaryColumn('uuid')
   id: string;
