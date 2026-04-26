@@ -1,24 +1,20 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { Films } from 'src/films/schema/films.schema';
 import { TicketDto } from './dto/order.dto';
 import { randomUUID } from 'crypto';
+import { FilmsRepository } from '../repository/films.repository';
 
 @Injectable()
 export class OrderService {
-  constructor(@InjectModel(Films.name) private FilmsModel: Model<Films>) {}
+  constructor(private readonly filmsRepository: FilmsRepository) {}
 
   async order(tickets: TicketDto[]) {
     const result = [];
 
     for (const ticket of tickets) {
-      const film = await this.FilmsModel.findOne({ id: ticket.film }).exec();
-      if (!film) {
-        throw new BadRequestException('Фильм не найден');
-      }
-
-      const session = film.schedule.find((s) => s.id === ticket.session);
+      const session = await this.filmsRepository.findById(
+        ticket.film,
+        ticket.session,
+      );
       if (!session) {
         throw new BadRequestException('Сеанс не найден');
       }
@@ -28,12 +24,10 @@ export class OrderService {
         throw new BadRequestException(`${seatKey} уже занято`);
       }
 
-      await this.FilmsModel.updateOne(
-        {
-          id: ticket.film,
-          'schedule.id': ticket.session,
-        },
-        { $push: { 'schedule.$.taken': seatKey } },
+      await this.filmsRepository.occupySeat(
+        ticket.film,
+        ticket.session,
+        seatKey,
       );
 
       result.push({
@@ -45,8 +39,8 @@ export class OrderService {
         seat: ticket.seat,
         price: ticket.price,
       });
-
-      return result;
     }
+
+    return result;
   }
 }

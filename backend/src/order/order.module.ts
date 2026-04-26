@@ -1,13 +1,10 @@
 import { Module } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { OrderController } from './order.controller';
-import { MongooseModule } from '@nestjs/mongoose';
-import { Films, FilmsSchema } from 'src/films/schema/films.schema';
+import { RepositoryModule } from '../repository/repository.module';
 
 @Module({
-  imports: [
-    MongooseModule.forFeature([{ name: Films.name, schema: FilmsSchema }]),
-  ],
+  imports: [RepositoryModule],
   controllers: [OrderController],
   providers: [OrderService],
 })
