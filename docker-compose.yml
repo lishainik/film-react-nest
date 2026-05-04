@@ -1,13 +1,13 @@
 services:
   frontend:
    build:
-    context: ./frontend
-    dockerfile: Dockerfile
-    args:
-      - VITE_API_URL=https://lowmill.nomorepartiessite.ru/api/afisha
-    image: ghcr.io/lishainik/film-react-nest-frontend:latest
-    restart: unless-stopped
-    volumes:
+     context: ./frontend
+     dockerfile: Dockerfile
+     args:
+      VITE_API_URL: https://lowmill.nomorepartiessite.ru/api/afisha
+     image: ghcr.io/lishainik/film-react-nest-frontend:latest
+     restart: unless-stopped
+     volumes:
       - frontend_dist:/app/dist
 
   backend:
