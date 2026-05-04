@@ -2,9 +2,9 @@ services:
   frontend:
    build:
     context: ./frontend
-    dockerfile: Dockerfile
     args:
       VITE_API_URL=https://jowmill.nomorepartiessite.ru/api/afisha
+    dockerfile: Dockerfile
     image: ghcr.io/lishainik/film-react-nest-frontend:latest
     restart: unless-stopped
     volumes:
