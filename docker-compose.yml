@@ -4,7 +4,7 @@ services:
     context: ./frontend
     dockerfile: Dockerfile
     args:
-       - VITE_API_URL=https://lowmill.nomorepartiessite.ru/api/afisha
+      - VITE_API_URL=https://jowmill.nomorepartiessite.ru/api/afisha
     image: ghcr.io/lishainik/film-react-nest-frontend:latest
     restart: unless-stopped
     volumes:
