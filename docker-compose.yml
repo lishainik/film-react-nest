@@ -5,6 +5,7 @@ services:
       dockerfile: Dockerfile
       args:
         - VITE_API_URL=https://lowmill.nomorepartiessite.ru/api/afisha
+        - VITE_CDN_URL=https://lowmill.nomorepartiessite.ru/content/afisha
     image: ghcr.io/lishainik/film-react-nest-frontend:latest
     restart: unless-stopped
     volumes:
